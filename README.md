@@ -15,7 +15,7 @@ powershell -ExecutionPolicy Bypass -File scripts/install-to-project.ps1 -TargetP
 
 ## What install script does
 1. Copies `.agent` assets into target project (excluding `.agent/reports`, `.agent/plan.json`).
-2. Adds local-only ignore rules into `.git/info/exclude`.
+2. Adds local-only ignore rules into `.git/info/exclude` (including `.agent/`).
 3. Optionally sets `skip-worktree` for tracked `.agent/*` files to reduce local noise.
 
 ## Notes

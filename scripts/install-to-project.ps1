@@ -40,6 +40,7 @@ if ($ApplyLocalIgnore) {
 
     $rules = @(
         "# skill-pack local ignores",
+        ".agent/",
         ".agent/plan.json",
         ".agent/reports/",
         ".tmp-cc-system/",
