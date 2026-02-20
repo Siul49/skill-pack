@@ -4,6 +4,17 @@ Routing rules for orchestrator and workflow-guide to assign requests to the righ
 
 ---
 
+## Mandatory Turn-Start Rule
+
+Before any execution, resolve and announce relevant skills for the current user request.
+
+1. Check explicitly named skills first.
+2. Then match keywords in this routing map.
+3. If no direct match exists, choose the best fallback skill and state why.
+4. Apply this on every user turn.
+
+---
+
 ## Keyword -> Skill Mapping
 
 | User Request Keywords | Primary Skill | Notes |
