@@ -25,6 +25,11 @@ description: Coordinate multiple agents for a complex multi-domain project using
 4. Record session start using memory write tool:
    - Create `session-coordinate.md` in the memory base path
    - Include: session start time, user request summary.
+5. Initialize big-task docs pack (plan/context/checklist):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .agent/skills/_shared/ensure-big-task-docs.ps1 -Workspace . -Mode Init -TaskId <task-id>
+```
 
 ---
 
@@ -78,6 +83,11 @@ wait
 1. Use spawn-agent.sh for each task (respects agent_cli_mapping from user-preferences.yaml)
 2. Spawn all same-priority tasks in parallel using background processes
 3. Assign separate workspaces to avoid file conflicts
+4. Before each subtask spawn, record review checkpoint:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .agent/skills/_shared/ensure-big-task-docs.ps1 -Workspace . -Mode Review -TaskId <task-id> -SubtaskNote "<agent>/<task>"
+```
 
 ---
 

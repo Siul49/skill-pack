@@ -16,6 +16,11 @@ description: Automated CLI-based parallel agent execution with preflight, per-ag
 1. Read `.agent/skills/workflow-guide/SKILL.md` and confirm core rules.
 2. Read `.agent/skills/_shared/context-loading.md` for resource loading strategy.
 3. Read `.agent/skills/_shared/skill-routing.md` for routing constraints.
+4. Initialize big-task docs pack (plan/context/checklist) if not initialized:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .agent/skills/_shared/ensure-big-task-docs.ps1 -Workspace {workspace} -Mode Init -TaskId <task-id>
+```
 
 ---
 
@@ -51,6 +56,12 @@ If preflight fails, stop execution and report why.
 ## Step 4: Spawn Agents by Priority Tier
 
 For each priority tier (P0, P1, ...):
+
+- Before each subtask spawn, read big-task docs and write review checkpoint:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .agent/skills/_shared/ensure-big-task-docs.ps1 -Workspace {workspace} -Mode Review -TaskId <task-id> -SubtaskNote "<agent>/<task>"
+```
 
 - Spawn agents using project CLI conventions.
 - Keep same-priority tasks parallel.

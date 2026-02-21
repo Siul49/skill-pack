@@ -35,6 +35,8 @@ Before any execution, resolve and announce relevant skills for the current user 
 | trace id, observability, log masking, middleware chain | **verify-observability** | Validate tracing/logging contracts and middleware wiring |
 | room parser, room collection, room pipeline, dto alias | **verify-room-pipeline** | Validate room data pipeline consistency |
 | manage-skills, skill maintenance, verification skill setup | **manage-skills** | Maintain and evolve verify skills for this repo |
+| project customization, customize verify skill, skill bootstrap, 스킬 커스터마이징 | **project-customizer** | Generate project-fit verify skills from config |
+| project fit orchestrator, 병렬 스킬 실행, one-skill parallel, project fit runner | **project-fit-orchestrator** | One entrypoint to run project-fit verify skills in parallel |
 | preflight, postflight, workflow automation, guardrail, hook migration | **orchestrator** | Uses `_shared/preflight.ps1`, `_shared/verify.ps1`, `_shared/postflight.ps1` |
 | automatic, parallel, orchestrate | **orchestrator** | |
 | workflow, guide, manual, step-by-step | **workflow-guide** | |
@@ -112,5 +114,7 @@ Before any execution, resolve and announce relevant skills for the current user 
 | verify-implementation | Run all verification skills and produce an integrated report |
 | verify-observability | Validate Trace ID, log masking, and middleware chain contracts |
 | verify-room-pipeline | Validate room collection/parsing/DTO mapping consistency |
+| project-customizer | Bootstrap project-specific verify skill generation workflow |
+| project-fit-orchestrator | Run project-fit customization and parallel verify execution with one command |
 | commit | Create conventional commits with project rules |
 | manage-skills | Maintain skill quality and verify coverage mapping |

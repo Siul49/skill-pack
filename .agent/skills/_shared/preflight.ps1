@@ -24,6 +24,21 @@ if ($gitRepoExit -ne 0) {
 
 Write-Output "[preflight] agent=$AgentType workspace=$Workspace"
 
+$bigTaskGuard = Join-Path $Workspace ".agent/skills/_shared/ensure-big-task-docs.ps1"
+$skipBigTaskGuard = @("ci") -contains $AgentType
+if ((-not $skipBigTaskGuard) -and (Test-Path $bigTaskGuard)) {
+    try {
+        & $bigTaskGuard -Workspace $Workspace -Mode Check -RequireRecentReviewMinutes 240
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "[preflight] big-task docs check failed"
+            exit 1
+        }
+    } catch {
+        Write-Error "[preflight] big-task docs guard failed: $($_.Exception.Message)"
+        exit 1
+    }
+}
+
 $changedFiles = @()
 $prevErrorAction = $ErrorActionPreference
 $ErrorActionPreference = 'Continue'
