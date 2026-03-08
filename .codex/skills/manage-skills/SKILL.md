@@ -20,7 +20,7 @@ description: Maintain skill coverage, registries, routing maps, and validation s
 - Load `../_shared/` only when the local resources are insufficient.
 
 ## Available References
-- `scripts/scripts`
+- `scripts/`
 - `scripts/validate-skill-links.ps1`
 - `scripts/validate-verify-registry.ps1`
 
