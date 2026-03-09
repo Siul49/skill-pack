@@ -1,37 +1,39 @@
-﻿# skill-pack
+# skill-pack
 
-Reusable Codex skill bundle for projects using `.agent` workflows.
+Claude Code 기반 재사용 가능한 에이전트 스킬 번들.
 
-## Contents
-- `.agent/skills/*`
-- `.agent/workflows/*`
-- `.agent/config/user-preferences.yaml`
-- `.agent/mcp.json`
+## 구조
 
-## Included Automation Packs
-- `project-customizer`: generate project-specific `verify-*` skill from config and sync routing/registries.
-- `project-fit-orchestrator`: run multiple `verify-*` skills in parallel from one command.
-- `ensure-big-task-docs`: enforce plan/context/checklist loop for large tasks.
-
-## Install into a project
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/install-to-project.ps1 -TargetPath "C:\path\to\project" -ApplyLocalIgnore -SetSkipWorktree
+```
+.claude/skills/          # 스킬 정의 (SKILL.md + resources/)
+├── backend/             # API, DB, 서버 로직
+├── frontend/            # UI, 컴포넌트, 스타일링
+├── mobile/              # iOS, Android, Flutter
+├── debug/               # 버그 진단, 에러 추적
+├── qa/                  # 보안/성능/접근성 감사
+├── pm/                  # 기획, 태스크 분해
+├── commit/              # Conventional Commits
+├── review/              # 코드 리뷰
+├── verify-implementation/  # 통합 검증 파이프라인
+├── manage-skills/       # 검증 스킬 자동 생성/관리
+└── _shared/resources/   # 공유 리소스
+CLAUDE.md                # 프로젝트 설정
 ```
 
-## One-line update (pull latest + install)
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/sync-project.ps1 -TargetPath "C:\path\to\project" -ApplyLocalIgnore -SetSkipWorktree
+## 사용 방법
+
+이 레포를 클론하고 대상 프로젝트에 `.claude/` 디렉토리와 `CLAUDE.md`를 복사합니다.
+
+```bash
+git clone https://github.com/your-org/skill-pack.git
+cp -r skill-pack/.claude/ your-project/.claude/
+cp skill-pack/CLAUDE.md your-project/CLAUDE.md
 ```
 
-## What install script does
-1. Copies `.agent` assets into target project (excluding `.agent/reports`, `.agent/plan.json`).
-2. Adds local-only ignore rules into `.git/info/exclude` (including `.agent/`).
-3. Optionally sets `skip-worktree` for tracked `.agent/*` files to reduce local noise.
+`CLAUDE.md`를 프로젝트에 맞게 수정합니다.
 
-## Notes
-- `.git/info/exclude` is local-only and is not committed.
-- `skip-worktree` is local-only git index behavior.
-- To undo skip-worktree:
-```powershell
-git -C <project> ls-files .agent | ForEach-Object { git -C <project> update-index --no-skip-worktree -- $_ }
-```
+## 스킬 동작 방식
+
+- **도메인 스킬** (backend, frontend 등): 맥락에 따라 자동 활성화
+- **검증 스킬** (verify-implementation, manage-skills): 수동 호출 시 실행
+- 각 스킬은 `SKILL.md`(규칙)와 `resources/`(상세 리소스)로 구성

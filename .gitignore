@@ -1,2 +1,1 @@
-﻿.agent/reports/
-.agent/plan.json
+.claude/settings.local.json
