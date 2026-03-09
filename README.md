@@ -1,7 +1,7 @@
 # skill-pack
 
-Claude Code 기반 재사용 가능한 에이전트 스킬 번들.
-다른 프로젝트에 설치하여 AI 에이전트 워크플로우를 표준화합니다.
+재사용 가능한 에이전트 스킬 번들.
+Claude Code와 Codex 모두 지원합니다. 설치 한 번으로 AI 에이전트 워크플로우를 표준화합니다.
 
 ## 왜 skill-pack인가?
 
@@ -45,23 +45,41 @@ CLAUDE.md                    # 프로젝트 설정 템플릿
 
 ## 설치
 
-### 스크립트로 설치
-
 ```bash
 git clone https://github.com/Siul49/skill-pack.git
-bash skill-pack/scripts/install.sh /path/to/your-project --with-claude-md
 ```
+
+### Claude Code 사용자
+
+```bash
+bash skill-pack/scripts/install.sh /path/to/your-project --claude --with-config
+```
+
+→ `.claude/skills/`에 스킬 설치 + `CLAUDE.md` 생성
+
+### Codex 사용자
+
+```bash
+bash skill-pack/scripts/install.sh /path/to/your-project --codex --with-config
+```
+
+→ `.agent/skills/`에 스킬 설치 + `agents.md` 생성
 
 ### 수동 설치
 
 ```bash
+# Claude Code
 cp -r skill-pack/.claude/skills/ your-project/.claude/skills/
 cp skill-pack/CLAUDE.md your-project/CLAUDE.md
+
+# Codex
+cp -r skill-pack/.claude/skills/ your-project/.agent/skills/
+cp skill-pack/CLAUDE.md your-project/agents.md
 ```
 
 ### 설치 후 할 일
 
-1. `CLAUDE.md`를 프로젝트에 맞게 수정
+1. 프로젝트 설정 파일(`CLAUDE.md` 또는 `agents.md`)을 프로젝트에 맞게 수정
    - `사용자 환경`: 호칭, 문체, 시간대
    - `커밋 규칙`: Co-Authored-By 이메일
    - 불필요한 스킬 디렉토리 삭제 (예: 모바일 미사용 시 `mobile/` 삭제)
@@ -71,10 +89,10 @@ cp skill-pack/CLAUDE.md your-project/CLAUDE.md
 
 ```bash
 cd skill-pack && git pull
-bash scripts/install.sh /path/to/your-project
+bash scripts/install.sh /path/to/your-project --claude  # 또는 --codex
 ```
 
-스킬만 덮어쓰고 `CLAUDE.md`는 건드리지 않습니다.
+스킬만 덮어쓰고 설정 파일은 건드리지 않습니다.
 
 ## 스킬 동작 방식
 
