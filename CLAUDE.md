@@ -30,10 +30,10 @@
 | `frontend` | UI, 컴포넌트, 스타일링, 반응형 |
 | `mobile` | iOS, Android, Flutter, React Native |
 | `debug` | 버그 진단, 에러 추적, 핫픽스 |
-| `qa` | 보안/성능/접근성 감사, 코드 리뷰 |
+| `qa` | 보안/성능/접근성 전체 감사 |
 | `pm` | 기획, 태스크 분해, 스프린트 계획 |
 | `commit` | Conventional Commits 규격 커밋 |
-| `review` | 코드 리뷰, diff 감사 |
+| `review` | diff 중심 빠른 코드 리뷰 |
 
 ### 검증 및 관리 스킬 (수동 호출)
 

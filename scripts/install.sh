@@ -51,7 +51,11 @@ if [[ "$WITH_CLAUDE_MD" == "--with-claude-md" ]]; then
   fi
 fi
 
-# 4. .gitignore에 .claude/context/ 추가 (복합 작업 런타임 파일)
+# 4. .claude/context/ 초기화 (복합 작업 문서 저장소)
+mkdir -p "$TARGET/.claude/context"
+echo "[install] .claude/context/ → 초기화 완료"
+
+# 5. .gitignore에 런타임 파일 추가
 if [[ -f "$TARGET/.gitignore" ]]; then
   if ! grep -q '.claude/context/' "$TARGET/.gitignore" 2>/dev/null; then
     echo "" >> "$TARGET/.gitignore"
@@ -71,3 +75,4 @@ echo "     - '사용자 환경' 섹션의 호칭, 문체 등"
 echo "     - '커밋 규칙'의 Co-Authored-By"
 echo "     - 프로젝트에 불필요한 스킬이 있으면 해당 디렉토리 삭제"
 echo "  2. manage-skills 스킬로 프로젝트별 verify 스킬을 생성하세요"
+echo "  3. 복합 작업 시 .claude/context/에 계획서가 자동 생성됩니다"
