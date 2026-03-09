@@ -20,17 +20,38 @@ Claude Code 기반 재사용 가능한 에이전트 스킬 번들.
 CLAUDE.md                # 프로젝트 설정
 ```
 
-## 사용 방법
+## 설치
 
-이 레포를 클론하고 대상 프로젝트에 `.claude/` 디렉토리와 `CLAUDE.md`를 복사합니다.
+### 스크립트로 설치
 
 ```bash
-git clone https://github.com/your-org/skill-pack.git
-cp -r skill-pack/.claude/ your-project/.claude/
+git clone https://github.com/Siul49/skill-pack.git
+bash skill-pack/scripts/install.sh /path/to/your-project --with-claude-md
+```
+
+### 수동 설치
+
+```bash
+cp -r skill-pack/.claude/skills/ your-project/.claude/skills/
 cp skill-pack/CLAUDE.md your-project/CLAUDE.md
 ```
 
-`CLAUDE.md`를 프로젝트에 맞게 수정합니다.
+### 설치 후 할 일
+
+1. `CLAUDE.md`를 프로젝트에 맞게 수정
+   - `사용자 환경`: 호칭, 문체, 시간대
+   - `커밋 규칙`: Co-Authored-By 이메일
+   - 불필요한 스킬 디렉토리 삭제 (예: 모바일 미사용 시 `mobile/` 삭제)
+2. `manage-skills` 스킬로 프로젝트에 맞는 `verify-*` 스킬 생성
+
+## 업데이트
+
+```bash
+cd skill-pack && git pull
+bash scripts/install.sh /path/to/your-project
+```
+
+스킬만 덮어쓰고 `CLAUDE.md`는 건드리지 않습니다.
 
 ## 스킬 동작 방식
 
