@@ -5,79 +5,88 @@ Claude Code 기반 재사용 가능한 에이전트 스킬 번들.
 
 ## 왜 skill-pack인가?
 
-- **스킬 자동 활성화**: 백엔드 작업이면 backend 스킬이, 버그면 debug 스킬이 알아서 켜집니다
-- **복합 작업 자동 관리**: 큰 작업은 계획서 → 체크리스트 → 검증까지 자동으로 진행
-- **컨텍스트 절약**: 필요한 리소스만 동적으로 로드하여 컨텍스트 낭비를 방지
-- **설치 한 번이면 끝**: 스크립트 한 줄로 어떤 프로젝트든 적용 가능
+Claude Code는 강력하지만, 프로젝트마다 스킬/훅/에이전트를 매번 설정하는 건 반복 작업입니다.
+skill-pack은 이 설정을 **한 번 만들고, 어디서든 재사용**할 수 있게 합니다.
 
-## 포함된 스킬
+- **16개 스킬 자동 활성화**: 백엔드 작업이면 backend, 버그면 debug, MCP 서버면 mcp-builder가 알아서 켜집니다
+- **5개 서브에이전트 자동 위임**: 코드 리뷰, 테스트, 보안 감사를 독립 에이전트가 worktree 격리 환경에서 처리
+- **10개 이벤트 훅 + 3가지 핸들러**: command, prompt(LLM 판단), agent(에이전트 분석)으로 보안 감지, 품질 점검, 컨텍스트 보존까지 자동화
+- **복합 작업 자동 관리**: 큰 작업은 계획서 → 체크리스트 → 검증 → 보고까지 워크플로우가 잡혀있습니다
+- **플러그인 한 줄 설치**: `/plugin install`이나 스크립트 한 줄로 어떤 프로젝트든 적용 가능
 
-| 스킬 | 유형 | 용도 |
-|------|------|------|
-| `backend` | 자동 | API, DB, 인증, 서버 로직 |
-| `frontend` | 자동 | UI, 컴포넌트, 스타일링, 반응형 |
-| `mobile` | 자동 | iOS, Android, Flutter, React Native |
-| `debug` | 자동 | 버그 진단, 에러 추적, 핫픽스 |
-| `qa` | 자동 | 보안/성능/접근성 전체 감사 |
-| `review` | 자동 | diff 중심 빠른 코드 리뷰 |
-| `pm` | 자동 | 기획, 태스크 분해, 스프린트 계획 |
-| `commit` | 자동 | Conventional Commits 규격 커밋 |
-| `research` | 자동 | 기술 조사, 선행 리서치, 비교 분석 |
-| `document` | 자동 | 문서화, API 문서, 아키텍처 문서 |
-| `context-builder` | 자동 | 프로젝트 컨텍스트 문서 자동 생성 |
-| `verify-implementation` | 수동 | 통합 검증 파이프라인 |
-| `manage-skills` | 수동 | 검증 스킬 자동 생성/관리 |
+## 포함된 스킬 (16개)
 
-## 구조
+### 자동 활성화
 
-```
-.claude/
-├── skills/                  # 스킬 정의 (SKILL.md + resources/)
-│   ├── backend/             # API, DB, 서버 로직
-│   ├── frontend/            # UI, 컴포넌트, 스타일링
-│   ├── mobile/              # iOS, Android, Flutter
-│   ├── debug/               # 버그 진단, 에러 추적
-│   ├── qa/                  # 보안/성능/접근성 감사
-│   ├── review/              # 코드 리뷰
-│   ├── pm/                  # 기획, 태스크 분해
-│   ├── commit/              # Conventional Commits
-│   ├── research/            # 기술 조사, 선행 리서치
-│   ├── document/            # 문서화, API/아키텍처 문서
-│   ├── context-builder/     # 프로젝트 컨텍스트 자동 생성
-│   ├── verify-implementation/  # 통합 검증 파이프라인
-│   ├── manage-skills/       # 검증 스킬 자동 생성/관리
-│   └── _shared/resources/   # 공유 리소스
-├── agents/                  # 서브에이전트 (자동 위임)
-│   ├── code-reviewer.md     # 코드 리뷰 (worktree 격리)
-│   ├── task-planner.md      # 복합 작업 계획서
-│   ├── test-runner.md       # 테스트 실행 (worktree 격리)
-│   ├── doc-writer.md        # 문서 생성/갱신
-│   └── security-auditor.md  # 보안 스캔 (worktree 격리)
-├── hooks/                   # 이벤트 Hook 스크립트
-│   ├── session-context-loader.sh  # SessionStart
-│   ├── block-dangerous-commands.sh  # PreToolUse(Bash)
-│   ├── auto-format.sh       # PostToolUse(Edit|Write)
-│   ├── checklist-reminder.sh  # Stop
-│   └── subagent-post-process.sh  # SubagentStop
-├── settings.json            # Hook 등록, 권한 설정
-└── context/                 # 복합 작업 문서 (런타임)
-CLAUDE.md                    # 프로젝트 설정 템플릿
-```
+| 스킬 | 용도 |
+|------|------|
+| `backend` | API, DB, 인증, 서버 로직 |
+| `frontend` | UI, 컴포넌트, 스타일링, 반응형 |
+| `mobile` | iOS, Android, Flutter, React Native |
+| `debug` | 버그 진단, 에러 추적, 핫픽스 |
+| `qa` | 보안/성능/접근성 전체 감사 |
+| `review` | diff 중심 빠른 코드 리뷰 |
+| `pm` | 기획, 태스크 분해, 스프린트 계획 |
+| `commit` | Conventional Commits 규격 커밋 |
+| `research` | 기술 조사, 선행 리서치, 비교 분석 |
+| `document` | 문서화, API 문서, 아키텍처 문서 |
+| `context-builder` | 프로젝트 컨텍스트 문서 자동 생성 |
+| `skill-creator` | 새 스킬 작성 가이드, SKILL.md 표준 형식 |
+| `mcp-builder` | MCP 서버/도구 개발, Model Context Protocol 연동 |
+| `webapp-testing` | E2E/통합/컴포넌트 테스트 전략 및 작성 |
+
+### 수동 호출
+
+| 스킬 | 용도 |
+|------|------|
+| `verify-implementation` | 통합 검증 파이프라인 |
+| `manage-skills` | 검증 스킬 자동 생성/관리 |
 
 ## 설치
 
-### 스크립트로 설치
+### 방법 1: 플러그인으로 설치 (권장)
 
-```bash
-git clone https://github.com/Siul49/skill-pack.git
-bash skill-pack/scripts/install.sh /path/to/your-project --with-claude-md
+프로젝트의 `.claude/settings.json`에 추가:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "skill-pack": {
+      "source": {
+        "source": "github",
+        "repo": "Siul49/skill-pack",
+        "ref": "claude"
+      },
+      "autoUpdate": true
+    }
+  }
+}
 ```
 
-### 수동 설치
+그 후 Claude Code에서:
+
+```
+/plugin install skill-pack
+```
+
+### 방법 2: 스크립트로 설치
 
 ```bash
+git clone -b claude https://github.com/Siul49/skill-pack.git
+bash skill-pack/scripts/install.sh /path/to/your-project --claude --with-config
+
+# 플러그인 메타데이터 포함
+bash skill-pack/scripts/install.sh /path/to/your-project --plugin
+```
+
+### 방법 3: 수동 설치
+
+```bash
+git clone -b claude https://github.com/Siul49/skill-pack.git
 cp -r skill-pack/.claude/skills/ your-project/.claude/skills/
-cp skill-pack/CLAUDE.md your-project/CLAUDE.md
+cp -r skill-pack/.claude/agents/ your-project/.claude/agents/
+cp -r skill-pack/.claude/hooks/ your-project/.claude/hooks/
+cp skill-pack/.claude/settings.json your-project/.claude/settings.json
 ```
 
 ### 설치 후 할 일
@@ -90,49 +99,83 @@ cp skill-pack/CLAUDE.md your-project/CLAUDE.md
 
 ## 업데이트
 
+플러그인 설치 시 `autoUpdate: true`이면 세션 시작 시 자동 업데이트됩니다.
+
+스크립트 설치의 경우:
+
 ```bash
-cd skill-pack && git pull
-bash scripts/install.sh /path/to/your-project
+cd skill-pack && git pull origin claude
+bash scripts/install.sh /path/to/your-project --claude
 ```
 
 스킬만 덮어쓰고 `CLAUDE.md`는 건드리지 않습니다.
 
-## 스킬 동작 방식
+## 구조
 
-- **도메인 스킬** (backend, frontend 등): 맥락에 따라 자동 활성화
-- **검증 스킬** (verify-implementation, manage-skills): 수동 호출 시 실행
-- 각 스킬은 `SKILL.md`(규칙)와 `resources/`(상세 리소스)로 구성
+```
+.claude/
+├── skills/                     # 스킬 정의 (SKILL.md + resources/)
+│   ├── backend/                # API, DB, 서버 로직
+│   ├── frontend/               # UI, 컴포넌트, 스타일링
+│   ├── mobile/                 # iOS, Android, Flutter
+│   ├── debug/                  # 버그 진단, 에러 추적
+│   ├── qa/                     # 보안/성능/접근성 감사
+│   ├── review/                 # 코드 리뷰
+│   ├── pm/                     # 기획, 태스크 분해
+│   ├── commit/                 # Conventional Commits
+│   ├── research/               # 기술 조사, 선행 리서치
+│   ├── document/               # 문서화, API/아키텍처 문서
+│   ├── context-builder/        # 프로젝트 컨텍스트 자동 생성
+│   ├── skill-creator/          # 새 스킬 작성 가이드
+│   ├── mcp-builder/            # MCP 서버/도구 개발
+│   ├── webapp-testing/         # E2E/통합/컴포넌트 테스트
+│   ├── verify-implementation/  # 통합 검증 파이프라인
+│   ├── manage-skills/          # 검증 스킬 자동 관리
+│   └── _shared/resources/      # 공유 리소스
+├── agents/                     # 서브에이전트 (자동 위임)
+│   ├── code-reviewer.md        # 코드 리뷰 (worktree 격리)
+│   ├── task-planner.md         # 복합 작업 계획서
+│   ├── test-runner.md          # 테스트 실행 (worktree 격리)
+│   ├── doc-writer.md           # 문서 생성/갱신
+│   └── security-auditor.md     # 보안 스캔 (worktree 격리)
+├── hooks/                      # 이벤트 Hook 스크립트 (10개)
+├── settings.json               # Hook 등록, 권한 설정
+└── context/                    # 복합 작업 문서 (런타임)
+.claude-plugin/
+├── plugin.json                 # 플러그인 메타데이터
+└── marketplace.json            # 마켓플레이스 배포 설정
+```
 
 ## 서브에이전트
 
-독립 컨텍스트에서 전문화된 작업을 위임합니다. 상황에 따라 자동으로 호출되며, 읽기 전용 에이전트는 worktree 격리로 안전하게 실행됩니다.
+독립 컨텍스트에서 전문화된 작업을 위임합니다. 모든 에이전트는 `memory: [project]`로 세션 간 학습을 유지합니다.
 
-| 에이전트 | 모델 | 용도 | Worktree | 자동 호출 조건 |
-|---------|------|------|----------|---------------|
-| `code-reviewer` | sonnet | 코드 리뷰 | YES | 코드 수정 완료 후 |
-| `task-planner` | inherit | 복합 작업 계획서 | NO | 복합 작업 감지 시 |
-| `test-runner` | haiku | 테스트 실행/분석 | YES | 구현 완료 후 |
-| `doc-writer` | sonnet | 문서 생성/갱신 | NO | 기능 완료 후 |
-| `security-auditor` | sonnet | 보안 취약점 스캔 | YES | 인증/보안 코드 변경 시 |
+| 에이전트 | 모델 | 용도 | Worktree | 프리로드 스킬 |
+|---------|------|------|----------|--------------|
+| `code-reviewer` | sonnet | 코드 리뷰 | YES | review |
+| `task-planner` | inherit | 복합 작업 계획서 | NO | pm, research |
+| `test-runner` | haiku | 테스트 실행/분석 | YES | webapp-testing |
+| `doc-writer` | sonnet | 문서 생성/갱신 | NO | document, context-builder |
+| `security-auditor` | sonnet | 보안 취약점 스캔 | YES | qa |
 
-### Worktree 격리
+## Hooks (10개 이벤트)
 
-읽기 전용 에이전트는 `isolation: worktree`로 독립된 git worktree에서 실행됩니다.
-메인 작업과 충돌 없이 병렬 실행이 가능하며, 완료 후 자동으로 정리됩니다.
+3가지 핸들러 타입: `command` (쉘), `prompt` (LLM 판단), `agent` (에이전트 분석)
 
-## Hooks
-
-파일 수정, 명령 실행, 세션 시작/종료 등의 이벤트에 자동으로 반응합니다.
-
-| Hook | 이벤트 | 동작 |
-|------|--------|------|
-| 세션 컨텍스트 로더 | `SessionStart` | 브랜치, 미커밋 변경, 진행 중 태스크 상태 주입 |
-| 위험 명령 차단 | `PreToolUse(Bash)` | `rm -rf /`, `git push --force main` 등 차단 |
-| 자동 포매팅 | `PostToolUse(Edit\|Write)` | 파일 수정 후 프로젝트 포매터 자동 실행 |
-| 체크리스트 리마인더 | `Stop` | 복합 작업 중 미완료 항목 목록 알림 |
-| 서브에이전트 후처리 | `SubagentStop` | 서브에이전트 완료 후 다음 단계 안내 |
-
-Hook 스크립트는 `.claude/hooks/`에 위치하며, `.claude/settings.json`에서 등록합니다.
+| Hook | 이벤트 | 타입 | 동작 |
+|------|--------|------|------|
+| 세션 컨텍스트 로더 | `SessionStart` | command | 브랜치, 태스크 상태 주입 |
+| 위험 명령 차단 | `PreToolUse(Bash)` | command | 위험 명령 차단 |
+| 자동 포매팅 | `PostToolUse(Edit\|Write)` | command | 프로젝트 포매터 실행 |
+| 보안 변경 감지 | `PostToolUse(Edit\|Write)` | prompt | 보안 관련 코드 변경 시 알림 |
+| 도구 실패 힌트 | `PostToolUseFailure` | command | 도구 실패 시 디버그 가이드 |
+| 인스트럭션 검증 | `InstructionsLoaded` | command | CLAUDE.md 유효성 확인 |
+| 서브에이전트 로깅 | `SubagentStart` | command | 서브에이전트 시작 기록 |
+| 서브에이전트 후처리 | `SubagentStop` | command | 완료 후 다음 단계 안내 |
+| 태스크 완료 보고 | `TaskCompleted` | command | 체크리스트 진행률 보고 |
+| 컨텍스트 압축 보존 | `PreCompact` | command | 압축 전 작업 상태 보존 |
+| 체크리스트 리마인더 | `Stop` | command | 미완료 항목 알림 |
+| 코드 품질 점검 | `Stop` | agent | 변경 파일 품질 자동 분석 |
 
 ## 복합 작업 프로토콜
 
