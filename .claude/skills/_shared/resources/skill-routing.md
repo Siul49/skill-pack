@@ -28,6 +28,9 @@
 | 문서화, API 문서, README, 아키텍처 정리, CHANGELOG | **document** | 코드→문서 동기화 |
 | 컨텍스트 정리, 프로젝트 요약, 온보딩, CLAUDE.md 갱신 | **context-builder** | AI 세션 간 지식 전달 |
 | 스킬 관리, 검증 스킬 설정 | **manage-skills** | |
+| 스킬 만들기, 새 스킬, 커맨드 추가 | **skill-creator** | SKILL.md 표준 형식 가이드 |
+| MCP 서버, MCP 도구, MCP 연동, Model Context Protocol | **mcp-builder** | MCP 서버/클라이언트 구축 |
+| 테스트 작성, E2E 테스트, 통합 테스트, 컴포넌트 테스트 | **webapp-testing** | test-runner 에이전트에서도 참조 |
 
 ---
 
@@ -37,7 +40,7 @@
 |-----------|-----------|
 | 풀스택 기능 개발 | pm → (backend + frontend) 병렬 → qa |
 | 모바일 앱 개발 | pm → (backend + mobile) 병렬 → qa |
-| 버그 수정 후 리뷰 | debug → review |
+| 버그 수정 후 리뷰 | debug → review → commit |
 | 기능 추가 후 테스트 | pm → 해당 스킬 → qa |
 | 변경사항 리뷰 후 커밋 | review → commit |
 | 새 기술 도입 | research → pm → 구현 → qa |

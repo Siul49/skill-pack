@@ -104,7 +104,7 @@
 |------|------|
 | 풀스택 기능 개발 | pm → (backend + frontend) 병렬 → qa |
 | 모바일 앱 개발 | pm → (backend + mobile) 병렬 → qa |
-| 버그 수정 후 리뷰 | debug → qa |
+| 버그 수정 후 리뷰 | debug → review → commit |
 | 기능 추가 후 테스트 | pm → 해당 에이전트 → qa |
 | 새 기술 도입 | research → pm → 구현 → qa |
 | 대규모 변경 후 문서화 | 구현 → document → context-builder |
@@ -160,6 +160,7 @@
 | `SessionStart` | `session-context-loader.sh` | 프로젝트 컨텍스트 동적 로딩 |
 | `PreToolUse` | `block-dangerous-commands.sh` | 위험 명령 차단 (Bash) |
 | `PostToolUse` | `auto-format.sh` | 코드 자동 포맷 (Edit/Write) |
+| `PostToolUse` | `security-change-detector.sh` | 보안 관련 파일 변경 감지 (Edit/Write) |
 | `PostToolUseFailure` | `tool-failure-handler.sh` | 도구 실패 시 디버그 힌트 |
 | `InstructionsLoaded` | `instructions-validator.sh` | CLAUDE.md 유효성 검증 |
 | `SubagentStart` | `subagent-start-logger.sh` | 서브에이전트 시작 로깅 |
@@ -167,6 +168,7 @@
 | `TaskCompleted` | `task-completed-reporter.sh` | 태스크 완료 시 진행률 보고 |
 | `PreCompact` | `pre-compact-saver.sh` | 컨텍스트 압축 전 상태 보존 |
 | `Stop` | `checklist-reminder.sh` | 응답 완료 후 체크리스트 리마인더 |
+| `Stop` | `code-quality-gate.sh` | 소스 코드 변경 시 품질 점검 권장 |
 
 ## 프로젝트 구조
 
