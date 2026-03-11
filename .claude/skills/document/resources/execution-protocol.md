@@ -1,5 +1,13 @@
 # Document 실행 프로토콜
 
+## Step -1: Thinking Cycle (질문 + 결정)
+1. **질문** — `../_shared/resources/thinking-cycle.md` Phase 0 수행
+   - 작업 복잡도에 맞는 소크라테스 질문 선정
+   - 사용자 답변 대기 (답변 전 진행 금지)
+2. **결정** — 트레이드오프 존재 시 Phase 1 수행
+   - 선택지 제시 + 근거 요구
+   - 근거 없는 선택은 재질문
+
 ## 1단계: 문서화 범위 파악
 
 ```
@@ -48,3 +56,8 @@
 □ 한국어 문서 기준을 준수하는가? (식별자는 영어)
 □ 불필요한 중복이 없는가?
 ```
+
+## Final Step: 회고 (Thinking Cycle Phase 3)
+1. `../_shared/resources/thinking-cycle.md` Phase 3 수행
+2. 회고 질문 제시 → 사용자 답변을 `.claude/reflections/YYYY-MM-DD.md`에 기록
+3. 회고 없이 작업 종료 금지

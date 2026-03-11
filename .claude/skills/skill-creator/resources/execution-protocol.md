@@ -1,5 +1,13 @@
 # 스킬 생성 실행 프로토콜
 
+## Step -1: Thinking Cycle (질문 + 결정)
+1. **질문** — `../_shared/resources/thinking-cycle.md` Phase 0 수행
+   - 작업 복잡도에 맞는 소크라테스 질문 선정
+   - 사용자 답변 대기 (답변 전 진행 금지)
+2. **결정** — 트레이드오프 존재 시 Phase 1 수행
+   - 선택지 제시 + 근거 요구
+   - 근거 없는 선택은 재질문
+
 ## Phase 1: 요구사항 분석
 
 1. 사용자 요청에서 스킬 용도 파악
@@ -42,3 +50,8 @@ mkdir -p .claude/skills/{name}/resources
 - 리소스 없는 스킬 → 최소 execution-protocol.md 권장
 - 기존 스킬과 겹치는 활성화 조건 → 차이점 섹션 필수
 - CamelCase 또는 snake_case 이름 → kebab-case만 사용
+
+## Final Step: 회고 (Thinking Cycle Phase 3)
+1. `../_shared/resources/thinking-cycle.md` Phase 3 수행
+2. 회고 질문 제시 → 사용자 답변을 `.claude/reflections/YYYY-MM-DD.md`에 기록
+3. 회고 없이 작업 종료 금지

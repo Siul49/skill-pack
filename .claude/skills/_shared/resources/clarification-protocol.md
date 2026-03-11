@@ -3,7 +3,34 @@
 When requirements are ambiguous, "assuming and proceeding" usually leads in the wrong direction.
 Follow this protocol to secure clear requirements before execution.
 
-> **Core Principle**: "Agents learn when to ask for help rather than blindly attempting every task" - Ask early, ask often.
+> **Core Principle**: AI는 실행자가 아니라 사고 파트너다. 답을 주기 전에 질문하고, 결정을 대신하지 않는다.
+
+---
+
+## Thinking Cycle 연동 (필수)
+
+이 프로토콜은 `thinking-cycle.md`와 함께 작동한다.
+
+**불확실성 레벨과 무관하게, 모든 작업에 최소 1개 질문은 필수.**
+
+| 상황 | 기존 동작 | 변경된 동작 |
+|------|-----------|------------|
+| LOW 불확실성 | 기본값 적용 후 진행 | **최소 1개 질문** 후 진행 |
+| MEDIUM 불확실성 | 옵션 제시 후 선택 요청 | 옵션 제시 + **근거 요구** |
+| HIGH 불확실성 | 차단, 질문 목록 제시 | 차단, 질문 목록 제시 (동일) |
+
+### 스킵 방지 정책
+
+- 사용자가 "그냥 해줘", "알아서 해"라고 요청해도 **최소 1개 질문에 답해야 진행**
+- 질문 없이 실행을 시작하는 것은 **금지**
+- 스킵 요청 시 대응:
+
+```
+이해합니다, 하지만 최소 1개 질문에는 답이 필요합니다.
+가장 핵심적인 질문 하나만 드릴게요:
+
+→ {가장 중요한 질문 1개}
+```
 
 ---
 
@@ -11,8 +38,8 @@ Follow this protocol to secure clear requirements before execution.
 
 | Level | State | Action | Example |
 |-------|-------|--------|---------|
-| **LOW** | Clear | Apply defaults and proceed, record assumptions | "Create a TODO app" |
-| **MEDIUM** | Partially ambiguous | Present 2-3 options + request user selection | "Create a user management system" |
+| **LOW** | Clear | **최소 1개 질문** + defaults 적용 후 진행 | "Create a TODO app" |
+| **MEDIUM** | Partially ambiguous | Present 2-3 options + **근거 있는 선택** 요구 | "Create a user management system" |
 | **HIGH** | Very ambiguous | **Cannot proceed**, must ask questions | "Create a good app" |
 
 ---
@@ -38,38 +65,41 @@ Automatically classify as MEDIUM/HIGH level in the following situations:
 
 ## Escalation Templates
 
-### LOW → Proceed (Assumed)
+### LOW → 질문 1개 + Proceed (Assumed)
 ```
-⚠️ Assumptions applied:
+🤔 진행 전에 하나만:
+→ {작업 범위/영향에 관한 질문 1개}
+
+⚠️ 답변 확인 후 아래 기본값으로 진행합니다:
 - JWT authentication included
 - PostgreSQL database
 - REST API
 - MVP scope (CRUD only)
-
-Proceeding with these defaults. Override if needed.
 ```
 
-### MEDIUM → Request Selection (Options)
+### MEDIUM → Request Selection + 근거 요구 (Options)
 ```
-🔍 Uncertainty detected: {specific issue}
+⚖️ 선택이 필요합니다: {specific issue}
 
 Option A: {approach}
-  ✅ Pros: {benefits}
-  ❌ Cons: {drawbacks}
-  💰 Effort: {low/medium/high}
+  → 장점: {benefits}
+  → 단점: {drawbacks}
+  → 비용: {low/medium/high}
 
 Option B: {approach}
-  ✅ Pros: {benefits}
-  ❌ Cons: {drawbacks}
-  💰 Effort: {low/medium/high}
+  → 장점: {benefits}
+  → 단점: {drawbacks}
+  → 비용: {low/medium/high}
 
 Option C: {approach}
-  ✅ Pros: {benefits}
-  ❌ Cons: {drawbacks}
-  💰 Effort: {low/medium/high}
+  → 장점: {benefits}
+  → 단점: {drawbacks}
+  → 비용: {low/medium/high}
 
-Which approach do you prefer? (A/B/C)
+어떤 걸 선택하시겠어요? **이유도 함께** 알려주세요.
 ```
+
+> 근거 없이 "A"만 답하면 → "왜 A인지 한 줄만 더 알려주세요."
 
 ### HIGH → Blocked
 ```

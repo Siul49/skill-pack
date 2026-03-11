@@ -91,6 +91,15 @@ await server.connect(transport);
 2. Claude Code에서 도구 호출 테스트
 3. 에러 핸들링 및 타임아웃 처리 확인
 
+## Thinking Cycle (필수)
+
+모든 작업에 사고 사이클을 적용한다. 상세: `../_shared/resources/thinking-cycle.md`
+
+1. **질문**: 실행 전 최소 1개 소크라테스 질문 → 답변 전 진행 금지
+2. **결정**: 트레이드오프 존재 시 선택지 제시 → 근거 있는 선택 요구
+3. **실행**: Phase 0, 1 완료 후에만 진입
+4. **회고**: 작업 완료 후 사용자 회고 → `.claude/reflections/YYYY-MM-DD.md`에 기록
+
 ## 핵심 규칙
 
 1. **MCP 스펙 준수**: `@modelcontextprotocol/sdk` 최신 버전 사용

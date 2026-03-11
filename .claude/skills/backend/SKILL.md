@@ -34,6 +34,15 @@ Router (HTTP) → Service (Business Logic) → Repository (Data Access) → Mode
 - 역할: HTTP 요청 수신, 입력 검증, Service 호출, 응답 반환
 - 원칙: 비즈니스 로직 금지, DI를 통해 Service 주입
 
+## Thinking Cycle (필수)
+
+모든 작업에 사고 사이클을 적용한다. 상세: `../_shared/resources/thinking-cycle.md`
+
+1. **질문**: 실행 전 최소 1개 소크라테스 질문 → 답변 전 진행 금지
+2. **결정**: 트레이드오프 존재 시 선택지 제시 → 근거 있는 선택 요구
+3. **실행**: Phase 0, 1 완료 후에만 진입
+4. **회고**: 작업 완료 후 사용자 회고 → `.claude/reflections/YYYY-MM-DD.md`에 기록
+
 ## 핵심 규칙
 
 1. Clean architecture: router → service → repository → models

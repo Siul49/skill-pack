@@ -171,6 +171,12 @@ fi
 mkdir -p "$TARGET/$CONTEXT_DIR"
 echo "[install] $CONTEXT_DIR/ → 초기화 완료"
 
+# --- 7.5. reflections 디렉토리 초기화 ---
+REFLECTIONS_DIR="$(dirname "$CONTEXT_DIR")/reflections"
+mkdir -p "$TARGET/$REFLECTIONS_DIR"
+touch "$TARGET/$REFLECTIONS_DIR/.gitkeep"
+echo "[install] $REFLECTIONS_DIR/ → 초기화 완료 (회고 기록용)"
+
 # --- 8. .gitignore 업데이트 ---
 if [[ -f "$TARGET/.gitignore" ]]; then
   NEEDS_UPDATE=false

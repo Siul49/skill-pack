@@ -1,5 +1,13 @@
 # 웹앱 테스트 실행 프로토콜
 
+## Step -1: Thinking Cycle (질문 + 결정)
+1. **질문** — `../_shared/resources/thinking-cycle.md` Phase 0 수행
+   - 작업 복잡도에 맞는 소크라테스 질문 선정
+   - 사용자 답변 대기 (답변 전 진행 금지)
+2. **결정** — 트레이드오프 존재 시 Phase 1 수행
+   - 선택지 제시 + 근거 요구
+   - 근거 없는 선택은 재질문
+
 ## Phase 1: 테스트 환경 파악
 
 1. 프로젝트 테스트 프레임워크 확인
@@ -95,3 +103,8 @@ test.describe("{시나리오}", () => {
 - 하드코딩된 셀렉터 (`#id`, `.class`) → 시맨틱 쿼리 (`getByRole`, `getByLabel`)
 - 하나의 테스트에 여러 시나리오 → 테스트당 하나의 시나리오
 - 모킹 과다 → 실제 동작 우선, 외부 의존성만 모킹
+
+## Final Step: 회고 (Thinking Cycle Phase 3)
+1. `../_shared/resources/thinking-cycle.md` Phase 3 수행
+2. 회고 질문 제시 → 사용자 답변을 `.claude/reflections/YYYY-MM-DD.md`에 기록
+3. 회고 없이 작업 종료 금지

@@ -5,6 +5,74 @@ Complete **each step before moving to the next** to avoid losing direction.
 
 ---
 
+## 0. Socratic Questioning (All Agents — Thinking Cycle Phase 0)
+
+Use this template to generate questions before any execution.
+Select question patterns based on task type and complexity.
+
+```
+=== Socratic Questions for: {task summary} ===
+
+Task complexity: {단순 / 보통 / 복합}
+Question count: {1 / 2-3 / 3-5}
+
+Questions:
+1. [{category}] {open-ended question}
+2. [{category}] {open-ended question} (if applicable)
+3. [{category}] {open-ended question} (if applicable)
+
+Categories:
+  - [범위] 영향 범위, 파급 효과
+  - [이유] 왜 이 접근인지, 대안은 검토했는지
+  - [실패] 실패 시나리오, 새로운 문제 가능성
+  - [사용자] 사용자/소비자 관점에서의 직관성
+  - [장기] 6개월 후 유효성, 유지보수성, 확장성
+
+Rules:
+  - Must be open-ended (no Yes/No answers)
+  - Must relate directly to the current task
+  - Depth scales with complexity (not artificially deep for simple tasks)
+```
+
+**Example (단순 — 타이포 수정):**
+```
+=== Socratic Questions for: README.md 오타 수정 ===
+
+Task complexity: 단순
+Question count: 1
+
+Questions:
+1. [범위] 이 오타가 다른 문서에도 반복되고 있을 가능성이 있는데, 확인해봤어?
+```
+
+**Example (보통 — API 엔드포인트 추가):**
+```
+=== Socratic Questions for: 사용자 프로필 API 추가 ===
+
+Task complexity: 보통
+Question count: 2
+
+Questions:
+1. [사용자] 이 API의 주요 소비자가 누구야? 응답 형태가 그 소비자에게 최적인지 생각해봤어?
+2. [실패] 프로필 데이터가 없는 사용자에 대해 어떻게 처리할 건지 정했어?
+```
+
+**Example (복합 — 인증 시스템 전환):**
+```
+=== Socratic Questions for: Session → JWT 인증 전환 ===
+
+Task complexity: 복합
+Question count: 4
+
+Questions:
+1. [이유] Session 기반의 어떤 문제가 이 전환을 촉발했어? JWT가 그 문제를 정말 해결해?
+2. [실패] 전환 중 기존 로그인 세션이 무효화되면 사용자 경험에 어떤 영향이 있어?
+3. [장기] JWT의 토큰 갱신 전략을 어떻게 설계할 건지 생각해봤어?
+4. [범위] 이 전환이 영향을 미치는 서비스/클라이언트가 몇 개야?
+```
+
+---
+
 ## 1. Debugging Reasoning (Debug Agent, Backend/Frontend/Mobile Agent)
 
 Repeat the loop below when finding the cause of a bug. After 3 iterations without resolution, record `Status: blocked`.
