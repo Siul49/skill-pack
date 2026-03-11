@@ -142,7 +142,7 @@
 - 커밋 전 반드시 사용자 확인
 - `git add -A` 또는 `git add .` 금지 — 파일명 명시
 - 비밀 파일(.env, credentials 등) 커밋 금지
-- Co-Authored-By: First Fluke <our.first.fluke@gmail.com>
+- Co-Authored-By: Siul49 <kksu149@gmail.com>
 
 ## 한국어 문서 기준
 

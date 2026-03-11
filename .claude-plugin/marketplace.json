@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
+  "name": "skill-pack",
+  "description": "재사용 가능한 에이전트 스킬 번들. Claude Code 워크플로우를 표준화합니다.",
+  "plugins": [
+    {
+      "id": "skill-pack",
+      "name": "Skill Pack",
+      "description": "16개 스킬 + 5개 에이전트 + 10개 훅으로 구성된 Claude Code 워크플로우 번들",
+      "version": "1.0.0",
+      "path": ".",
+      "tags": ["skills", "agents", "hooks", "workflow", "korean"]
+    }
+  ]
+}
