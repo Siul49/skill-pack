@@ -44,8 +44,33 @@ BLOCKED_PATTERNS=(
   "chmod -R 777"
 )
 
-for pattern in "${BLOCKED_PATTERNS[@]}"; do
-  if echo "$COMMAND" | grep -qi "$pattern" 2>/dev/null; then
+# 정확한 위험 명령 감지 (경로가 붙은 정상 명령은 허용)
+DANGEROUS_EXACT=(
+  "rm -rf /$"
+  "rm -rf /\*"
+  "rm -rf ~"
+  "sudo rm -rf"
+  "git push --force main"
+  "git push --force master"
+  "git push -f origin main"
+  "git push -f origin master"
+  "git push --force-with-lease origin main"
+  "git push --force-with-lease origin master"
+  "git reset --hard$"
+  "git clean -fd"
+  "git checkout -- \."
+  "DROP TABLE"
+  "DROP DATABASE"
+  "TRUNCATE TABLE"
+  "> /dev/sda"
+  "mkfs\."
+  ":\(\)\{ :\|:& \};:"
+  "chmod 777 /"
+  "chmod -R 777 /"
+)
+
+for pattern in "${DANGEROUS_EXACT[@]}"; do
+  if echo "$COMMAND" | grep -qiE "$pattern" 2>/dev/null; then
     echo "차단됨: '$pattern' 패턴이 감지되었습니다. 이 명령은 실행할 수 없습니다." >&2
     exit 2
   fi
