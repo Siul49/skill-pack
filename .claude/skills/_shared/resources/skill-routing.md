@@ -21,6 +21,9 @@
 | plan, breakdown, 기획, 스프린트 | **pm** | |
 | commit, 커밋, 변경사항 저장 | **commit** | |
 | verify, 검증, 구현 확인 | **verify-implementation** | |
+| API 스키마, DTO, 라우터 검증 | **verify-api-schema** | verify-implementation에서 자동 호출 |
+| 비즈니스 로직, Service, 도메인 검증 | **verify-business-logic** | verify-implementation에서 자동 호출 |
+| DB, Repository, 쿼리, 스키마 검증 | **verify-database-layer** | verify-implementation에서 자동 호출 |
 | 조사, 리서치, 비교, 어떤 게 좋을까, 방법 찾기 | **research** | 구현 전 선행 조사 |
 | 문서화, API 문서, README, 아키텍처 정리, CHANGELOG | **document** | 코드→문서 동기화 |
 | 컨텍스트 정리, 프로젝트 요약, 온보딩, CLAUDE.md 갱신 | **context-builder** | AI 세션 간 지식 전달 |

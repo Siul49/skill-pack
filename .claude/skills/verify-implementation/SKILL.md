@@ -21,10 +21,12 @@ argument-hint: "[선택사항: 특정 verify 스킬 이름]"
 ## 등록된 검증 스킬
 
 <!-- manage-skills가 이 테이블을 자동 관리합니다 -->
-<!-- 아직 등록된 검증 스킬이 없습니다. manage-skills로 프로젝트에 맞는 검증 스킬을 생성하세요. -->
 
 | # | 스킬 | 설명 |
 |---|------|------|
+| 1 | verify-api-schema | API 라우터, DTO, request/response 모델, API 계약 정합성 검증 |
+| 2 | verify-business-logic | Service 레이어 규칙, 스케줄러, 배치, 도메인 로직 정합성 검증 |
+| 3 | verify-database-layer | Repository, CRUD 경로, 스키마 가정, 쿼리 안전성 검증 |
 
 ## 실행 절차
 
