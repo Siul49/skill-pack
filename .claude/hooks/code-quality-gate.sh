@@ -21,13 +21,21 @@ if [[ -z "$CODE_FILES" ]]; then
   exit 0
 fi
 
-# 이미 보고한 파일 세트와 동일하면 스킵 (반복 경고 방지)
-REPORT_HASH=$(echo "$CODE_FILES" | md5sum | cut -d' ' -f1)
-HASH_FILE="/tmp/.code-quality-gate-last-hash"
-if [[ -f "$HASH_FILE" ]] && [[ "$(cat "$HASH_FILE")" == "$REPORT_HASH" ]]; then
-  exit 0
+# 세션당 1회만 보고 (Stop 훅 무한 루프 방지)
+LOCK_DIR="${TMPDIR:-${TEMP:-/tmp}}"
+LOCK_FILE="$LOCK_DIR/.code-quality-gate.lock"
+if [[ -f "$LOCK_FILE" ]]; then
+  # 락 파일이 1시간 이내면 스킵
+  if [[ "$(uname)" == "Darwin" ]]; then
+    LOCK_AGE=$(( $(date +%s) - $(stat -f %m "$LOCK_FILE") ))
+  else
+    LOCK_AGE=$(( $(date +%s) - $(stat -c %Y "$LOCK_FILE") ))
+  fi
+  if [[ "$LOCK_AGE" -lt 3600 ]]; then
+    exit 0
+  fi
 fi
-echo "$REPORT_HASH" > "$HASH_FILE"
+touch "$LOCK_FILE"
 
 FILE_COUNT=$(echo "$CODE_FILES" | wc -l | tr -d ' ')
 

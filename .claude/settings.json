@@ -19,6 +19,15 @@
             "command": "bash .claude/hooks/block-dangerous-commands.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/secret-file-guard.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [

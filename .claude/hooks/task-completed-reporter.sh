@@ -20,8 +20,8 @@ if [[ ! -f "$CHECKLIST" ]]; then
 fi
 
 # 체크리스트 진행률 계산
-TOTAL=$(grep -c '^\s*- \[' "$CHECKLIST" 2>/dev/null || echo "0")
-DONE=$(grep -c '^\s*- \[x\]' "$CHECKLIST" 2>/dev/null || echo "0")
+TOTAL=$(grep -c '^\s*- \[' "$CHECKLIST" 2>/dev/null) || TOTAL=0
+DONE=$(grep -c '^\s*- \[x\]' "$CHECKLIST" 2>/dev/null) || DONE=0
 
 if [[ "$TOTAL" -gt 0 ]]; then
   PCT=$(( DONE * 100 / TOTAL ))

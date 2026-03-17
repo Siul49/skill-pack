@@ -25,7 +25,7 @@ fi
 # 스킬 디렉토리와 CLAUDE.md 동기화 확인
 if [[ -d ".claude/skills" ]]; then
   SKILL_COUNT=$(find .claude/skills -maxdepth 1 -mindepth 1 -type d ! -name '_shared' 2>/dev/null | wc -l | tr -d ' ')
-  DOC_SKILL_COUNT=$(grep -c '| `[a-z]' "CLAUDE.md" 2>/dev/null || echo "0")
+  DOC_SKILL_COUNT=$(grep -c '| `[a-z]' "CLAUDE.md" 2>/dev/null) || DOC_SKILL_COUNT=0
 
   if [[ "$SKILL_COUNT" -ne "$DOC_SKILL_COUNT" && "$SKILL_COUNT" -gt 0 ]]; then
     echo "[인스트럭션 검증] 스킬 수 불일치: 디렉토리 ${SKILL_COUNT}개 vs CLAUDE.md ${DOC_SKILL_COUNT}개"

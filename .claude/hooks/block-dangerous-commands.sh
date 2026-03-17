@@ -18,33 +18,7 @@ if [[ -z "$COMMAND" ]]; then
   exit 0
 fi
 
-# 차단 패턴 목록
-BLOCKED_PATTERNS=(
-  "rm -rf /"
-  "rm -rf /*"
-  "rm -rf ~"
-  "sudo rm -rf"
-  "git push --force main"
-  "git push --force master"
-  "git push -f origin main"
-  "git push -f origin master"
-  "git push --force-with-lease origin main"
-  "git push --force-with-lease origin master"
-  "git reset --hard"
-  "git clean -fd"
-  "git checkout -- ."
-  "DROP TABLE"
-  "DROP DATABASE"
-  "TRUNCATE TABLE"
-  "truncate "
-  "> /dev/sda"
-  "mkfs."
-  ":(){ :|:& };:"
-  "chmod 777"
-  "chmod -R 777"
-)
-
-# 정확한 위험 명령 감지 (경로가 붙은 정상 명령은 허용)
+# 위험 명령 감지 패턴 (정규식, grep -E 호환)
 DANGEROUS_EXACT=(
   "rm -rf /$"
   "rm -rf /\*"
@@ -67,6 +41,9 @@ DANGEROUS_EXACT=(
   ":\(\)\{ :\|:& \};:"
   "chmod 777 /"
   "chmod -R 777 /"
+  "git add -A"
+  "git add --all"
+  "git add \.[[:space:]]*$"
 )
 
 for pattern in "${DANGEROUS_EXACT[@]}"; do

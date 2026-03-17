@@ -18,8 +18,8 @@ if [[ -f "$CONTEXT_DIR/current-task.txt" ]]; then
   TASK_ID=$(cat "$CONTEXT_DIR/current-task.txt" 2>/dev/null | tr -d '[:space:]')
   if [[ -n "$TASK_ID" && -f "$CONTEXT_DIR/$TASK_ID/checklist.md" ]]; then
     CURRENT_TASK="$TASK_ID"
-    INCOMPLETE=$(grep -c '^\- \[ \]' "$CONTEXT_DIR/$TASK_ID/checklist.md" 2>/dev/null || echo "0")
-    COMPLETE=$(grep -c '^\- \[x\]' "$CONTEXT_DIR/$TASK_ID/checklist.md" 2>/dev/null || echo "0")
+    INCOMPLETE=$(grep -c '^\- \[ \]' "$CONTEXT_DIR/$TASK_ID/checklist.md" 2>/dev/null) || INCOMPLETE=0
+    COMPLETE=$(grep -c '^\- \[x\]' "$CONTEXT_DIR/$TASK_ID/checklist.md" 2>/dev/null) || COMPLETE=0
     INCOMPLETE_ITEMS="미완료 ${INCOMPLETE}건 / 완료 ${COMPLETE}건"
   fi
 fi

@@ -24,8 +24,8 @@ if [[ ! -f "$CHECKLIST" ]]; then
 fi
 
 # 현재 진행 상태 요약
-TOTAL=$(grep -c '^\s*- \[' "$CHECKLIST" 2>/dev/null || echo "0")
-DONE=$(grep -c '^\s*- \[x\]' "$CHECKLIST" 2>/dev/null || echo "0")
+TOTAL=$(grep -c '^\s*- \[' "$CHECKLIST" 2>/dev/null) || TOTAL=0
+DONE=$(grep -c '^\s*- \[x\]' "$CHECKLIST" 2>/dev/null) || DONE=0
 REMAINING=$(grep '^\s*- \[ \]' "$CHECKLIST" 2>/dev/null | head -5 | sed 's/- \[ \] /  · /' || true)
 
 echo "[컨텍스트 압축 전 알림] 현재 작업: $TASK_ID ($DONE/$TOTAL 완료)"
